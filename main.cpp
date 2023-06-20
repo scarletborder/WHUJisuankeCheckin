@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-06-20 09:57:28
  * @LastEditors: scarletborder baishuibeef@gmail.com
- * @LastEditTime: 2023-06-20 12:14:02
+ * @LastEditTime: 2023-06-20 13:11:10
  * @FilePath: \undefinede:\code\C\study_c\project\WHUJisuankeCheckin\main.cpp
  */
 #include "md5.h"
@@ -56,6 +56,8 @@ unsigned char* getMd5Sum(std::string scpp)
 
 int main()
 {
+    std::cout << "In Windows, please ensure this program and file\"checkin.dat\" are in your local repo \n"
+              << std::endl;
     std::ifstream afile;
     afile.open("checkin.dat", std::ios::in);
     std::string Stu_Nu;
@@ -68,11 +70,16 @@ int main()
         std::string labNu;
         std::cin >> labNu;
         Stu_Nu += labNu;
+        std::cout << "==Your student's numero plus lab's numero" << Stu_Nu << ",if it is wrong,delete the file\"checkin.dat\" in content==\n\n"
+                  << std::endl;
+
+        std::ofstream catIgnore;
+        catIgnore.open(".gitignore", std::ios::app | std::ios::out);
+        catIgnore << "\n*.exe\ncheckin.dat";
     } else {
-        std::cout << "==Your student's numero plus lab's numero" << Stu_Nu << ",if it is wrong,delete the file\"checkin.dat\" in content==\n"
+        std::cout << "==Your student's numero plus lab's numero" << Stu_Nu << ",if it is wrong,delete the file\"checkin.dat\" in content==\n\n"
                   << std::endl;
     }
-
     // 首先获得当前时间并转化为时间戳
     time_t now = time(0);
     tm* ltm = localtime(&now);
@@ -91,11 +98,15 @@ int main()
 
     std::string premd5 = real_stu_nu + pwd + real_lab_nu;
     newfile << getMd5Sum(premd5);
+    std::cout << "create file \"" << Date_Str << " complete, please continue the operator of git" << std::endl;
 
-    // 提示之后的git操作
-    std::cout << "create file \"" << Date_Str << " \"complete, please continue the operator of git" << std::endl;
+    // 之后的git操作
+    system("git add .");
+    std::string cmd2 = "git commit -m \"Add: " + Date_Str + "\"";
+    system(cmd2.c_str());
     std::ofstream ifile;
     ifile.open("checkin.dat", std::ios::out);
     ifile << Stu_Nu;
+
     return 0;
 }
