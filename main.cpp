@@ -1,8 +1,8 @@
 /*
  * @Date: 2023-06-20 09:57:28
  * @LastEditors: scarletborder baishuibeef@gmail.com
- * @LastEditTime: 2023-06-21 09:00:35
- * @FilePath: \test26_jisuankee:\code\C\study_c\project\WHUJisuankeCheckin\main.cpp
+ * @LastEditTime: 2023-06-21 09:23:09
+ * @FilePath: \undefinede:\code\C\study_c\project\WHUJisuankeCheckin\main.cpp
  */
 #include "md5.h"
 #include <ctime>
@@ -62,6 +62,7 @@ int main()
     afile.open("checkin.dat", std::ios::in);
     std::string Stu_Nu;
     afile >> Stu_Nu;
+    afile.close();
     if (Stu_Nu.empty() == true) {
         // 真空
         std::cout << "Initializing: Please enter your student's numero" << std::endl;
@@ -98,16 +99,20 @@ int main()
 
     std::string premd5 = real_stu_nu + pwd + real_lab_nu;
     newfile << getMd5Sum(premd5);
-    std::cout << "create file \"" << Date_Str << " complete, please continue the operator of git" << std::endl;
-
+    std::cout << "create file \"" << Date_Str << " complete, please wait the operator of git" << std::endl;
+    newfile.close();
     // 之后的git操作
     system("git add .");
+    std::cout << "git add complete" << std::endl;
     std::string cmd2 = "git commit -m \"Add: " + Date_Str + "\"";
     system(cmd2.c_str());
+    std::cout << "git commit complete" << std::endl;
     system("git push");
+    std::cout << "git push complete" << std::endl;
     std::ofstream ifile;
     ifile.open("checkin.dat", std::ios::out);
     ifile << Stu_Nu;
+    ifile.close();
 
     return 0;
 }
