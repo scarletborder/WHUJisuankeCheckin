@@ -1,8 +1,8 @@
 /*
  * @Date: 2023-06-20 09:57:28
  * @LastEditors: scarletborder baishuibeef@gmail.com
- * @LastEditTime: 2023-06-20 13:11:10
- * @FilePath: \undefinede:\code\C\study_c\project\WHUJisuankeCheckin\main.cpp
+ * @LastEditTime: 2023-06-21 09:00:35
+ * @FilePath: \test26_jisuankee:\code\C\study_c\project\WHUJisuankeCheckin\main.cpp
  */
 #include "md5.h"
 #include <ctime>
@@ -104,6 +104,7 @@ int main()
     system("git add .");
     std::string cmd2 = "git commit -m \"Add: " + Date_Str + "\"";
     system(cmd2.c_str());
+    system("git push");
     std::ofstream ifile;
     ifile.open("checkin.dat", std::ios::out);
     ifile << Stu_Nu;
